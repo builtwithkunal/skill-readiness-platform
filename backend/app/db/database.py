@@ -15,3 +15,10 @@ from app.models.user_skill_score import UserSkillScore
 from app.models.resume_skill import ResumeSkill
 
 Base.metadata.create_all(bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
