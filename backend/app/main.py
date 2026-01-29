@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from app.db import database
 
 app = FastAPI(title="Skill Readiness Platform")
 
