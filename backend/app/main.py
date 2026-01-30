@@ -3,6 +3,7 @@ from app.api.routes.skills import router as skill_router
 from app.api.routes.roles import router as role_router
 from app.api.routes.users import router as user_router
 from app.db import database
+from app.api.routes.protected import router as protected_router
 
 app = FastAPI(title="Skill Readiness Platform")
 
@@ -11,6 +12,8 @@ app.include_router(skill_router)
 app.include_router(role_router)
 
 app.include_router(user_router)
+
+app.include_router(protected_router)
 
 @app.get("/health")
 def health_check():
