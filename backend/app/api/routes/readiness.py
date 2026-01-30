@@ -8,6 +8,8 @@ from app.services.resume_matcher import calculate_resume_match
 from app.services.assessment_calculator import calculate_assessment_score
 from app.services.skill_mapper import get_skill_ids
 
+
+
 router = APIRouter(prefix="/readiness", tags=["Readiness"])
 
 @router.get("/{role_name}")
@@ -22,6 +24,12 @@ def get_readiness(
     required_skills = ROLE_REQUIREMENTS[role_name]["skills"]
 
     skill_ids = get_skill_ids(required_skills, db)
+    if not skill_ids:
+        raise HTTPException(
+            status_code=400,
+            detail="Required skills not configured for this role"
+        )
+
     assessment_score = calculate_assessment_score(current_user.id, skill_ids, db)
     resume_score = calculate_resume_match(current_user.id, required_skills, db)
 

@@ -24,6 +24,12 @@ def get_dashboard(
         raise HTTPException(status_code=404, detail="Role not found")
 
     assessment_scores = get_assessment_scores(current_user.id, db)
+    if not assessment_scores:
+        return {
+            "message": "Assessment not completed yet",
+            "role": role_name
+        }
+
     resume_skills = get_resume_skills(current_user.id, db)
 
     required_skills = ROLE_REQUIREMENTS[role_name]["skills"]

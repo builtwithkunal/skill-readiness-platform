@@ -38,13 +38,29 @@ def submit_answers(
             correct += 1
 
     score = int((correct / total) * 100) if total > 0 else 0
-    new_score = UserSkillScore(
-        user_id=current_user.id,
-        skill_id=skill_id,
-        score=score
-    )
+    
+    # new_score = UserSkillScore(
+    #     user_id=current_user.id,
+    #     skill_id=skill_id,
+    #     score=score
+    # )
 
-    db.add(new_score)
+    # db.add(new_score)
+    existing = db.query(UserSkillScore).filter(
+        UserSkillScore.user_id == current_user.id,
+        UserSkillScore.skill_id == skill_id
+    ).order_by(UserSkillScore.id.desc()).first()
+
+    if existing:
+        existing.score = score
+    else:
+        new_score = UserSkillScore(
+            user_id=current_user.id,
+            skill_id=skill_id,
+            score=score
+        )
+        db.add(new_score)
+
     db.commit()
 
     return {

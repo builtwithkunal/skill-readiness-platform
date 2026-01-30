@@ -27,8 +27,18 @@ def upload_resume(
     skills = extract_skills_from_text(text, db)
 
     for skill in skills:
-        record = ResumeSkill(user_id=current_user.id, skill_id=skill.id)
-        db.add(record)
+        exists = db.query(ResumeSkill).filter(
+            ResumeSkill.user_id == current_user.id,
+            ResumeSkill.skill_id == skill.id
+        ).first()
+
+        if not exists:
+            record = ResumeSkill(
+                user_id=current_user.id,
+                skill_id=skill.id
+            )
+            db.add(record)
+         
 
     db.commit()
 
