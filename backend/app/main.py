@@ -6,6 +6,7 @@ from app.db import database
 from app.api.routes.protected import router as protected_router
 from app.api.routes.questions import router as question_router
 from app.api.routes.resume import router as resume_router
+from app.api.routes.readiness import router as readiness_router
 
 
 
@@ -23,6 +24,7 @@ app.include_router(question_router)
 
 app.include_router(resume_router)
 
+app.include_router(readiness_router)
 
 
 @app.get("/health")
