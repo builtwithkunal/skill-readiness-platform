@@ -1,5 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from app.models.question import Question
+
 
 DATABASE_URL = "mysql+pymysql://root:Kunalkunal01@localhost/skill_readiness_db"
 
@@ -11,6 +13,7 @@ from app.models.base import Base
 from app.models.user import User
 from app.models.skill import Skill
 from app.models.role import Role
+from app.models.question import Question
 from app.models.user_skill_score import UserSkillScore
 from app.models.resume_skill import ResumeSkill
 
