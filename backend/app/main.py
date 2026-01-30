@@ -5,6 +5,8 @@ from app.api.routes.users import router as user_router
 from app.db import database
 from app.api.routes.protected import router as protected_router
 from app.api.routes.questions import router as question_router
+from app.api.routes.resume import router as resume_router
+
 
 
 app = FastAPI(title="Skill Readiness Platform")
@@ -18,6 +20,9 @@ app.include_router(user_router)
 app.include_router(protected_router)
 
 app.include_router(question_router)
+
+app.include_router(resume_router)
+
 
 
 @app.get("/health")

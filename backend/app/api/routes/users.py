@@ -4,6 +4,8 @@ from app.db.database import get_db
 from app.models.user import User
 from app.api.schemas.user_schema import UserCreate, UserLogin, UserResponse
 from app.core.security import hash_password, verify_password, create_access_token
+from fastapi.security import OAuth2PasswordRequestForm
+
 
 
 router = APIRouter(prefix="/users", tags=["Users"])
@@ -35,12 +37,15 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login")
-def login_user(user: UserLogin, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.email == user.email).first()
+def login_user(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db)
+):
+    db_user = db.query(User).filter(User.email == form_data.username).first()
     if not db_user:
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
-    if not verify_password(user.password, db_user.hashed_password):
+    if not verify_password(form_data.password, db_user.hashed_password):
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     token = create_access_token({"user_id": db_user.id})
@@ -48,3 +53,4 @@ def login_user(user: UserLogin, db: Session = Depends(get_db)):
         "access_token": token,
         "token_type": "bearer"
     }
+
