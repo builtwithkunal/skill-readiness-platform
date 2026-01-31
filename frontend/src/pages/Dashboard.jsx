@@ -4,6 +4,9 @@ import api from "../services/api";
 export default function Dashboard() {
   const [role, setRole] = useState("Python Developer");
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -12,13 +15,24 @@ export default function Dashboard() {
 
   const loadDashboard = async () => {
     try {
+      setLoading(true);
+      setError("");
+
       const res = await api.get(`/dashboard/${role}`);
-      setData(res.data);
+      setData({
+       role_readiness_score: res.data.role_readiness_score ?? 0,
+       assessment_scores: res.data.assessment_scores ?? [],
+       resume_skills: res.data.resume_skills ?? [],
+       skill_gaps: res.data.skill_gaps ?? [],
+      });
+
     } catch (err) {
-      alert("Unable to load dashboard");
-      console.error(err);
+      setError("Unable to load dashboard data");
+    } finally {
+      setLoading(false);
     }
   };
+
 
   useEffect(() => {
     loadDashboard();
@@ -27,6 +41,11 @@ export default function Dashboard() {
   return (
     <div style={{ padding: "20px" }}>
       <h2>Dashboard</h2>
+      {loading && <p>Loading dashboard...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {!loading && !error && !data && <p>No dashboard data yet.</p>}
+
+
 
       <select value={role} onChange={(e) => setRole(e.target.value)}>
         <option>Python Developer</option>
@@ -41,6 +60,9 @@ export default function Dashboard() {
           <h1>{data.role_readiness_score}%</h1>
 
           <h3>Assessment Scores</h3>
+          {data.assessment_scores.length === 0 && (
+            <p>Please complete assessment to see scores.</p>
+          )}
           <ul>
             {data.assessment_scores.map((item) => (
               <li key={item.skill}>
@@ -50,6 +72,9 @@ export default function Dashboard() {
           </ul>
 
           <h3>Resume Skills</h3>
+          {data.resume_skills.length === 0 && (
+            <p>Please upload your resume.</p>
+          )}
           <ul>
             {data.resume_skills.map((skill) => (
               <li key={skill}>{skill}</li>

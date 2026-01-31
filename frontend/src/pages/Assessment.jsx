@@ -72,7 +72,13 @@ export default function Assessment() {
             </div>
           ))}
 
-          <button onClick={submitAnswers}>Submit</button>
+          <button
+            onClick={submitAnswers}
+            disabled={questions.length === 0}
+          > 
+            Submit
+          </button>
+
         </div>
       )}
 

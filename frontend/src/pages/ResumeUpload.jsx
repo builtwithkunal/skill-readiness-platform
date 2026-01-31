@@ -4,6 +4,8 @@ import api from "../services/api";
 export default function ResumeUpload() {
   const [file, setFile] = useState(null);
   const [skills, setSkills] = useState([]);
+  const [uploading, setUploading] = useState(false);
+
 
   const uploadResume = async () => {
     if (!file) {
@@ -15,6 +17,7 @@ export default function ResumeUpload() {
     formData.append("file", file);
 
     try {
+      setUploading(true);  
       const res = await api.post("/resume/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -25,6 +28,8 @@ export default function ResumeUpload() {
     } catch (err) {
       alert("Resume upload failed");
       console.error(err);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -40,7 +45,9 @@ export default function ResumeUpload() {
 
       <br /><br />
 
-      <button onClick={uploadResume}>Upload</button>
+      <button onClick={uploadResume} disabled={uploading}>
+        {uploading ? "Uploading..." : "Upload"}
+      </button>
 
       {skills.length > 0 && (
         <div>
@@ -55,3 +62,4 @@ export default function ResumeUpload() {
     </div>
   );
 }
+     

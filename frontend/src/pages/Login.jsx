@@ -4,24 +4,25 @@ import api, { setAuthToken } from "../services/api";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     try {
-      const formData = new URLSearchParams();
+      setLoading(true);
+
+      const formData = new FormData();
       formData.append("username", email); // backend expects "username"
       formData.append("password", password);
 
       const res = await api.post("/users/login", formData);
 
-      const token = res.data.access_token;
-
-      localStorage.setItem("token", token);
-      setAuthToken(token);
+      localStorage.setItem("token", res.data.access_token);
 
       window.location.href = "/dashboard";
     } catch (err) {
-      alert("Login failed");
-      console.error(err);
+      alert("Invalid email or password");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,7 +46,9 @@ export default function Login() {
       />
       <br /><br />
 
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin} disabled={loading}>
+        {loading ? "Logging in..." : "Login"}
+      </button>
     </div>
   );
 }
