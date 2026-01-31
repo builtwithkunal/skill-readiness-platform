@@ -1,9 +1,13 @@
 import { useState } from "react";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
 
   const handleRegister = async () => {
     try {
@@ -20,26 +24,42 @@ export default function Register() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Register</h2>
+    <div className="login-container">
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <br /><br />
+      {/* LEFT REGISTER CARD */}
+      <div className="login-card">
+        <h2>Create Account</h2>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br /><br />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <button onClick={handleRegister}>Register</button>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button onClick={handleRegister}>
+          Register
+        </button>
+        <p className="register-text">
+          Already have an account?
+          <span onClick={() => navigate("/")}> Login</span>
+        </p>
+      </div>
+
+      {/* RIGHT SIDE PANEL */}
+      <div className="login-visual">
+        <h1>Start Your Journey</h1>
+        <p>Build Skills. Get Ready. Get Hired.</p>
+      </div>
+
     </div>
   );
+
 }

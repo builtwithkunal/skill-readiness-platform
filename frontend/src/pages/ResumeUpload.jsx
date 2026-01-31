@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
+import "./ResumeUpload.css";
 
 export default function ResumeUpload() {
   const [file, setFile] = useState(null);
@@ -34,32 +35,37 @@ export default function ResumeUpload() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Upload Resume</h2>
+    <div className="resume-container">
 
-      <input
-        type="file"
-        accept=".pdf,.docx"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
+      <div className="resume-card">
+        <h2>Upload Your Resume</h2>
+        <p>Supported formats: PDF, DOCX</p>
 
-      <br /><br />
+        <input
+          type="file"
+          accept=".pdf,.docx"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
 
-      <button onClick={uploadResume} disabled={uploading}>
-        {uploading ? "Uploading..." : "Upload"}
-      </button>
+        <button onClick={uploadResume} disabled={uploading}>
+          {uploading ? "Uploading..." : "Upload Resume"}
+        </button>
 
-      {skills.length > 0 && (
-        <div>
-          <h3>Extracted Skills</h3>
-          <ul>
-            {skills.map((skill) => (
-              <li key={skill}>{skill}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {skills.length > 0 && (
+          <div className="skills-section">
+            <h3>Extracted Skills</h3>
+
+            <div className="skill-tags">
+              {skills.map((skill) => (
+                <span key={skill}>{skill}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
     </div>
   );
+
 }
      

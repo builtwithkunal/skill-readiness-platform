@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import "./Dashboard.css";
+
 
 export default function Dashboard() {
   const [role, setRole] = useState("Python Developer");
@@ -39,80 +41,104 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Dashboard</h2>
+    <div className="dashboard-container">
+
+      {/* HEADER */}
+      <div className="dashboard-header">
+        <h2>Dashboard</h2>
+        <button onClick={logout}>Logout</button>
+      </div>
+
+      {/* STATUS */}
       {loading && <p>Loading dashboard...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {!loading && !error && !data && <p>No dashboard data yet.</p>}
+      {error && <p className="error">{error}</p>}
 
-
-
-      <select value={role} onChange={(e) => setRole(e.target.value)}>
-        <option>Python Developer</option>
-        <option>Data Analyst</option>
-      </select>
-
-      <button onClick={loadDashboard}>Refresh</button>
+      {/* ROLE SELECT */}
+      <div className="role-bar">
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option>Python Developer</option>
+          <option>Data Analyst</option>
+        </select>
+        <button onClick={loadDashboard}>Refresh</button>
+      </div>
 
       {data && (
-        <div>
-          <h3>Role Readiness Score</h3>
-          <h1>{data.role_readiness_score}%</h1>
+        <>
+          {/* READINESS SCORE */}
+          <div className="score-card">
+            <h3>Role Readiness Score</h3>
+            <h1>{data.role_readiness_score}%</h1>
+          </div>
 
-          <h3>Assessment Scores</h3>
-          {data.assessment_scores.length === 0 && (
-            <p>Please complete assessment to see scores.</p>
-          )}
-          <ul>
-            {data.assessment_scores.map((item) => (
-              <li key={item.skill}>
-                {item.skill}: {item.score}%
-              </li>
-            ))}
-          </ul>
+          {/* ASSESSMENT */}
+          <div className="section">
+            <h3>Assessment Scores</h3>
 
-          <h3>Resume Skills</h3>
-          {data.resume_skills.length === 0 && (
-            <p>Please upload your resume.</p>
-          )}
-          <ul>
-            {data.resume_skills.map((skill) => (
-              <li key={skill}>{skill}</li>
-            ))}
-          </ul>
+            {data.assessment_scores.length === 0 && (
+              <p>Please complete assessment to see scores.</p>
+            )}
 
-          <h3>Skill Gaps & Guidance</h3>
-
-          {data.skill_gaps.length === 0 && (
-            <p>No major skill gaps 🎉</p>
-          )}
-
-          {data.skill_gaps.map((gap) => (
-            <div key={gap.skill}>
-              <strong>{gap.skill}</strong>
-              <p>Current: {gap.current_score}%</p>
-              <p>Required: {gap.required_score}%</p>
-              <ul>
-                <li>{gap.guidance.study}</li>
-                <li>{gap.guidance.practice}</li>
-                <li>{gap.guidance.project}</li>
-              </ul>
+            <div className="card-grid">
+              {data.assessment_scores.map((item) => (
+                <div className="mini-card" key={item.skill}>
+                  <p>{item.skill}</p>
+                  <strong>{item.score}%</strong>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+
+          {/* RESUME SKILLS */}
+          <div className="section">
+            <h3>Resume Skills</h3>
+
+            {data.resume_skills.length === 0 && (
+              <p>Please upload your resume.</p>
+            )}
+
+            <div className="skill-tags">
+              {data.resume_skills.map((skill) => (
+                <span key={skill}>{skill}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* SKILL GAPS */}
+          <div className="section">
+            <h3>Skill Gaps & Guidance</h3>
+
+            {data.skill_gaps.length === 0 && (
+              <p>No major skill gaps 🎉</p>
+            )}
+
+            {data.skill_gaps.map((gap) => (
+              <div className="gap-card" key={gap.skill}>
+                <h4>{gap.skill}</h4>
+                <p>Current: {gap.current_score}%</p>
+                <p>Required: {gap.required_score}%</p>
+                <ul>
+                  <li>{gap.guidance.study}</li>
+                  <li>{gap.guidance.practice}</li>
+                  <li>{gap.guidance.project}</li>
+                </ul>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
-      <hr />
+      {/* ACTION BUTTONS */}
+      <div className="action-buttons">
+        <button onClick={() => window.location.href = "/assessment"}>
+          Take Assessment
+        </button>
 
-      <button onClick={() => window.location.href = "/assessment"}>
-        Take Assessment
-      </button>
+        <button onClick={() => window.location.href = "/resume"}>
+          Upload Resume
+        </button>
+      </div>
 
-      <button onClick={() => window.location.href = "/resume"}>
-        Upload Resume
-      </button>
-
-      <button onClick={logout}>Logout</button>
     </div>
   );
+
 }

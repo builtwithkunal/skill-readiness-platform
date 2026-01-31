@@ -1,10 +1,15 @@
 import { useState } from "react";
 import api, { setAuthToken } from "../services/api";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleLogin = async () => {
     try {
@@ -27,28 +32,43 @@ export default function Login() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Login</h2>
+    <div className="login-container">
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <br /><br />
+      {/* LEFT LOGIN CARD */}
+      <div className="login-card">
+        <h2>Welcome Back</h2>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br /><br />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <button onClick={handleLogin} disabled={loading}>
-        {loading ? "Logging in..." : "Login"}
-      </button>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button onClick={handleLogin} disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
+
+        <p className="register-text">
+          Don’t have an account?
+          <span onClick={() => navigate("/register")}> Register/Create account</span>
+        </p>
+      </div>
+
+      {/* RIGHT SIDE PANEL */}
+      <div className="login-visual">
+        <h1>Unlock Your Potential</h1>
+        <p>AI-Driven Skill Pathways</p>
+      </div>
+
     </div>
   );
+
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import "./Assessment.css";
 
 export default function Assessment() {
   const [skills, setSkills] = useState([]);
@@ -36,31 +37,41 @@ export default function Assessment() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="assessment-container">
+
       <h2>Skill Assessment</h2>
 
+      {/* SKILL SELECTION */}
       {!selectedSkill && (
-        <div>
-          <h3>Select Skill</h3>
-          {skills.map((skill) => (
-            <button
-              key={skill.id}
-              onClick={() => loadQuestions(skill)}
-            >
-              {skill.name}
-            </button>
-          ))}
+        <div className="skill-select">
+          <h3>Select a Skill</h3>
+
+          <div className="skill-buttons">
+            {skills.map((skill) => (
+              <button
+                key={skill.id}
+                onClick={() => loadQuestions(skill)}
+              >
+                {skill.name}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
+      {/* QUESTIONS */}
       {selectedSkill && !result && (
-        <div>
-          <h3>{selectedSkill.name} Questions</h3>
+        <div className="question-section">
+          <h3>{selectedSkill.name} Assessment</h3>
 
-          {questions.map((q) => (
-            <div key={q.id}>
-              <p>{q.question_text}</p>
+          {questions.map((q, index) => (
+            <div className="question-card" key={q.id}>
+              <p>
+                <strong>Q{index + 1}.</strong> {q.question_text}
+              </p>
+
               <input
+                type="text"
                 placeholder="Your answer"
                 onChange={(e) =>
                   setAnswers({
@@ -73,19 +84,22 @@ export default function Assessment() {
           ))}
 
           <button
+            className="submit-btn"
             onClick={submitAnswers}
             disabled={questions.length === 0}
-          > 
-            Submit
+          >
+            Submit Assessment
           </button>
-
         </div>
       )}
 
+      {/* RESULT */}
       {result && (
-        <div>
-          <h3>Result</h3>
-          <p>Score: {result.score}%</p>
+        <div className="result-card">
+          <h3>Assessment Result</h3>
+
+          <h1>{result.score}%</h1>
+
           <p>
             Correct: {result.correct} / {result.total}
           </p>
@@ -95,6 +109,8 @@ export default function Assessment() {
           </button>
         </div>
       )}
+
     </div>
   );
+
 }
