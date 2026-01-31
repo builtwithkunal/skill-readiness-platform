@@ -32,14 +32,14 @@ def get_dashboard(
 
     resume_skills = get_resume_skills(current_user.id, db)
 
-    required_skills = ROLE_REQUIREMENTS[role_name]["skills"]
+    required_skills = list(ROLE_REQUIREMENTS[role_name].keys())
     skill_ids = get_skill_ids(required_skills, db)
 
     assessment_score = calculate_assessment_score(current_user.id, skill_ids, db)
     resume_score = calculate_resume_match(current_user.id, required_skills, db)
     readiness_score = int((0.6 * assessment_score) + (0.4 * resume_score))
 
-    gaps_raw = analyze_skill_gaps(current_user.id, skill_ids, db)
+    gaps_raw = analyze_skill_gaps(current_user.id, role_name, db)
     gaps = []
 
     for gap in gaps_raw:

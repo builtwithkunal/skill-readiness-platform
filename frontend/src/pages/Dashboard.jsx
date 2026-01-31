@@ -56,8 +56,44 @@ export default function Dashboard() {
       {/* ROLE SELECT */}
       <div className="role-bar">
         <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="">Select Role</option>
+          <option>Software Engineer</option>
+          <option>Associate Software Engineer</option>
+          <option>Junior Software Engineer</option>
+          <option>Software Developer</option>
+          <option>Graduate Engineer Trainee</option>
+          <option>Frontend Developer</option>
+          <option>React Developer</option>
+          <option>Web Developer</option>
+          <option>UI Developer</option>
           <option>Python Developer</option>
+          <option>Backend Developer</option>
+          <option>FastAPI Developer</option>
+          <option>Django Developer</option>
+          <option>API Developer</option>
+          <option>Integration Engineer</option>
+          <option>Java Developer</option>
+          <option>Java Backend Developer</option>
+          <option>Spring Boot Developer</option>
+          <option>Microservices Developer</option>
           <option>Data Analyst</option>
+          <option>Business Data Analyst</option>
+          <option>Analytics Engineer</option>
+          <option>Data Scientist</option>
+          <option>Junior Data Scientist</option>
+          <option>Machine Learning Engineer</option>
+          <option>Junior Machine Learning Engineer</option>
+          <option>AI Engineer</option>
+          <option>Research Analyst</option>
+          <option>DevOps Engineer</option>
+          <option>Junior DevOps Engineer</option>
+          <option>Cloud Engineer</option>
+          <option>AWS Cloud Engineer</option>
+          <option>Site Reliability Engineer</option>
+          <option>QA Automation Engineer</option>
+          <option>Application Support Engineer</option>
+          <option>System Engineer</option>
+          <option>Technical Associate</option>
         </select>
         <button onClick={loadDashboard}>Refresh</button>
       </div>

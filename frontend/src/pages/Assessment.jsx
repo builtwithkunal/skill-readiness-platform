@@ -47,13 +47,16 @@ export default function Assessment() {
           <h3>Select a Skill</h3>
 
           <div className="skill-buttons">
-            {skills.map((skill) => (
-              <button
-                key={skill.id}
-                onClick={() => loadQuestions(skill)}
-              >
-                {skill.name}
-              </button>
+            {skills
+              .slice()
+              .sort((a,b) => a.name.localeCompare(b.name))
+              .map((skill) => (
+                <button
+                  key={skill.id}
+                  onClick={() => loadQuestions(skill)}
+                >
+                  {skill.name}
+                </button>
             ))}
           </div>
         </div>
