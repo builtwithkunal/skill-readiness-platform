@@ -17,6 +17,12 @@ export default function Dashboard() {
 
       <br /><br />
 
+      <button onClick={() => window.location.href = "/resume"}>
+        Upload Resume
+      </button>
+
+      <br /><br />
+
       <button onClick={logout}>Logout</button>
     </div>
   );

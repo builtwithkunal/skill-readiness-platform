@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Assessment from "./pages/Assessment";
+import ResumeUpload from "./pages/ResumeUpload";
 
 
 export default function App() {
@@ -26,9 +27,18 @@ export default function App() {
           element={
             <ProtectedRoute>
              <Assessment />
-             </ProtectedRoute>
+            </ProtectedRoute>
           }
         />
+        <Route
+         path="/resume"
+         element={
+          <ProtectedRoute>
+           <ResumeUpload />
+           </ProtectedRoute>
+           }
+        />
+
       </Routes>
     </BrowserRouter>
   );
