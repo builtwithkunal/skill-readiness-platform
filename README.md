@@ -118,3 +118,25 @@ This project demonstrates:
 - Real-world problem solving
 
 It focuses on correctness, clarity, and extensibility rather than over-promising AI capabilities.
+
+
+## Frontend (V1)
+
+The frontend is built using React (Vite) and connects directly to the FastAPI backend.
+
+### Features
+- User authentication (JWT-based)
+- Skill assessment UI
+- Resume upload and skill extraction
+- Role readiness dashboard
+- Skill gap analysis with guidance
+
+### Configuration
+The frontend uses environment variables for backend connectivity.
+
+Example:
+VITE_API_BASE_URL=http://127.0.0.1:8000
+
+### Deployment
+The frontend is production-ready and can be deployed on platforms like Vercel or Netlify.
+Backend deployment is environment-dependent and can be configured accordingly.
