@@ -3,6 +3,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Assessment from "./pages/Assessment";
+
 
 export default function App() {
   return (
@@ -10,12 +12,21 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        
         <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assessment"
+          element={
+            <ProtectedRoute>
+             <Assessment />
+             </ProtectedRoute>
           }
         />
       </Routes>

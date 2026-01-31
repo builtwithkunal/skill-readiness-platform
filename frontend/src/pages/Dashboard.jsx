@@ -1,4 +1,4 @@
-import api, { setAuthToken } from "../services/api";
+import { setAuthToken } from "../services/api";
 
 export default function Dashboard() {
   const logout = () => {
@@ -10,6 +10,13 @@ export default function Dashboard() {
   return (
     <div style={{ padding: "20px" }}>
       <h2>Dashboard</h2>
+
+      <button onClick={() => window.location.href = "/assessment"}>
+        Take Assessment
+      </button>
+
+      <br /><br />
+
       <button onClick={logout}>Logout</button>
     </div>
   );

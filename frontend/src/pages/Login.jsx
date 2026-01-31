@@ -11,7 +11,7 @@ export default function Login() {
       formData.append("username", email); // backend expects "username"
       formData.append("password", password);
 
-      const res = await api.post("/login", formData);
+      const res = await api.post("/users/login", formData);
 
       const token = res.data.access_token;
 
